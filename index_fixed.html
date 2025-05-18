@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input Menu Makanan - PWA RNJ</title>
+    <!-- Import Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FF4081;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+            --success-color: #4CAF50;
+            --error-color: #F44336;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            padding: 15px 0;
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        main {
+            padding: 20px 0;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            background-color: white;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            font-weight: bold;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: var(--light-gray);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        .required:after {
+            content: " *";
+            color: var(--error-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3e8e41;
+        }
+        
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        
+        .alert-error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        
+        .item-list {
+            margin-top: 20px;
+        }
+        
+        .item-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-info h3 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .switch-label {
+            display: flex;
+            align-items: center;
+        }
+        
+        .switch-label span {
+            margin-left: 10px;
+        }
+        
+        #debug-info {
+            display: none;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .debug-entry {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        /* Image upload styles */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-upload-input {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+            display: block;
+            cursor: pointer;
+            opacity: 0;
+        }
+        
+        .file-upload-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 0;
+            height: 40px;
+            padding: 0 15px;
+            background-color: #f5f5f5;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: #555;
+            font-size: 16px;
+            line-height: 40px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .file-upload-btn i {
+            margin-right: 5px;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .image-preview-placeholder {
+            color: #999;
+            text-align: center;
+        }
+        
+        .upload-progress {
+            margin-top: 10px;
+            height: 5px;
+            width: 100%;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .upload-progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Perbaikan untuk tampilan responsif mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                font-size: 24px;
+                cursor: pointer;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                display: none;
+                z-index: 100;
+            }
+            
+            nav ul.show {
+                display: block;
+            }
+            
+            nav ul li {
+                width: 100%;
+                border-bottom: 1px solid #eee;
+            }
+            
+            nav ul li a {
+                padding: 15px 20px;
+                width: 100%;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+            
+            .tab {
+                border-radius: 0;
+                margin-right: 0;
+                margin-bottom: 5px;
+                border: 1px solid var(--border-color);
+            }
+        }
+        
+        /* Notifikasi visual untuk aksi berhasil */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Perbedaan warna untuk tombol aksi */
+        .btn-edit {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #0b7dda;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #555;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Konfirmasi hapus */
+        .confirm-dialog {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .confirm-dialog p {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">PWA RNJ</div>
+            <nav>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                    <li><a href="#">Beranda</a></li>
+                    <li><a href="#">Kedai</a></li>
+                    <li><a href="#">Menu Makanan</a></li>
+                    <li><a href="#">Pesanan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Pengelolaan Data</h1>
+        
+        <div class="tabs">
+            <div class="tab active" id="tab-kedai">Kelola Kedai</div>
+            <div class="tab" id="tab-menu">Kelola Menu Makanan</div>
+        </div>
+        
+        <div class="tab-content active" id="content-kedai">
+            <div class="card">
+                <h2 class="form-title">Form Input Kedai</h2>
+                <form id="form-kedai">
+                    <input type="hidden" id="kedai_id" value="">
+                    <div class="form-group">
+                        <label for="nama_kedai" class="required">Nama Kedai</label>
+                        <input type="text" id="nama_kedai" placeholder="Masukkan nama kedai" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foto_kedai">Foto Kedai</label>
+                        <div class="file-upload">
+                            <input type="file" id="foto_kedai" class="file-upload-input" accept="image/*">
+                            <div class="file-upload-btn"><i class="fas fa-upload"></i> Pilih Gambar</div>
+                        </div>
+                        <div class="image-preview" id="kedai-image-preview">
+                            <div class="image-preview-placeholder">Preview gambar akan muncul di sini</div>
+                        </div>
+                        <div class="upload-progress" id="kedai-upload-progress">
+                            <div class="upload-progress-bar" id="kedai-upload-progress-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jam_buka">Jam Buka</label>
+                        <input type="text" id="jam_buka" placeholder="Contoh: 08:00 - 21:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deskripsi_kedai">Deskripsi Singkat</label>
+                        <textarea id="deskripsi_kedai" placeholder="Masukkan deskripsi singkat kedai"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alamat_kedai">Alamat Kedai</label>
+                        <textarea id="alamat_kedai" placeholder="Masukkan alamat lengkap kedai"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ongkir" class="required">Ongkir Tetap (Rp)</label>
+                        <input type="number" id="ongkir" placeholder="Masukkan biaya ongkir tetap" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="switch-label">
+                            <label for="status_kedai">Status Kedai</label>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" id="status_kedai" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="status-text">Kedai aktif dan dapat menerima pesanan</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn" id="btn-simpan-kedai">Simpan Kedai</button>
+                        <button type="reset" class="btn btn-secondary" id="btn-batal-kedai">Batal</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="kedai-list" class="item-list">
+                <div class="empty-state">Belum ada data kedai. Silakan tambahkan kedai baru.</div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="content-menu">
+            <div class="card">
+                <h2 class="form-title">Form Input Menu Makanan</h2>
+                <form id="form-menu">
+                    <input type="hidden" id="menu_id" value="">
+                    <div class="form-group">
+                        <label for="pilih_kedai" class="required">Pilih Kedai</label>
+                        <select id="pilih_kedai" required>
+                            <option value="">-- Pilih Kedai --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nama_makanan" class="required">Nama Makanan</label>
+                        <input type="text" id="nama_makanan" placeholder="Masukkan nama menu makanan" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deskripsi_makanan">Deskripsi Makanan</label>
+                        <textarea id="deskripsi_makanan" placeholder="Masukkan deskripsi menu makanan"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="harga" class="required">Harga (Rp)</label>
+                        <input type="number" id="harga" placeholder="Masukkan harga menu" required>
+                        <small>Masukkan harga dalam Rupiah tanpa titik atau koma</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="foto_makanan">Foto Makanan</label>
+                        <div class="file-upload">
+                            <input type="file" id="foto_makanan" class="file-upload-input" accept="image/*">
+                            <div class="file-upload-btn"><i class="fas fa-upload"></i> Pilih Gambar</div>
+                        </div>
+                        <div class="image-preview" id="makanan-image-preview">
+                            <div class="image-preview-placeholder">Preview gambar akan muncul di sini</div>
+                        </div>
+                        <div class="upload-progress" id="makanan-upload-progress">
+                            <div class="upload-progress-bar" id="makanan-upload-progress-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="kategori_menu">Kategori Menu</label>
+                        <select id="kategori_menu">
+                            <option value="">-- Pilih Kategori --</option>
+                            <option value="Makanan Utama">Makanan Utama</option>
+                            <option value="Makanan Ringan">Makanan Ringan</option>
+                            <option value="Minuman">Minuman</option>
+                            <option value="Dessert">Dessert</option>
+                        </select>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn" id="btn-simpan-menu">Simpan Menu</button>
+                        <button type="button" class="btn" id="btn-simpan-tambah">Simpan & Tambah Baru</button>
+                        <button type="reset" class="btn btn-secondary" id="btn-batal-menu">Batal</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="menu-list" class="item-list">
+                <div class="empty-state">Belum ada data menu. Silakan tambahkan menu baru.</div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="debug-info"></div>
+    
+    <!-- Tambahkan elemen notifikasi -->
+    <div class="notification" id="notification">Operasi berhasil dilakukan!</div>
+    
+    <!-- Modal konfirmasi hapus -->
+    <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Konfirmasi Hapus</div>
+                <span class="close">&times;</span>
+            </div>
+            <div class="confirm-dialog">
+                <p id="delete-message">Apakah Anda yakin ingin menghapus item ini?</p>
+                <input type="hidden" id="delete-id">
+                <input type="hidden" id="delete-type">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btn-cancel-delete">Batal</button>
+                <button class="btn btn-delete" id="btn-confirm-delete">Hapus</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase initialization
+        const SUPABASE_URL = 'https://zezwvrsbehecksmsscjd.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inplend2cnNiZWhlY2tzbXNzY2pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY5MTg2MzgsImV4cCI6MjA2MjQ5NDYzOH0.313RNDf1LM5qQcC-HjTnX9rZcz2EKw3bT5MHOf2ou2Q';
+        const STORAGE_BUCKET = 'food-images';
+        
+        // Initialize Supabase client
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Debug logging
+        const debugInfo = document.getElementById('debug-info');
+        
+        function logDebug(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'debug-entry';
+            entry.innerHTML = `[${timestamp}] ${message}`;
+            
+            if (type === 'error') {
+                entry.style.color = 'red';
+            } else if (type === 'success') {
+                entry.style.color = 'green';
+            }
+            
+            debugInfo.appendChild(entry);
+            debugInfo.scrollTop = debugInfo.scrollHeight;
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        logDebug('App initialized successfully');
+        
+        // Tab navigation
+        const tabKedai = document.getElementById('tab-kedai');
+        const tabMenu = document.getElementById('tab-menu');
+        const contentKedai = document.getElementById('content-kedai');
+        const contentMenu = document.getElementById('content-menu');
+        
+        function setActiveTab(tab, content) {
+            // Remove active class from all tabs and contents
+            tabKedai.classList.remove('active');
+            tabMenu.classList.remove('active');
+            contentKedai.classList.remove('active');
+            contentMenu.classList.remove('active');
+            
+            // Add active class to selected tab and content
+            tab.classList.add('active');
+            content.classList.add('active');
+        }
+        
+        // Set default active tab
+        setActiveTab(tabKedai, contentKedai);
+        
+        // Add event listeners to tabs
+        tabKedai.addEventListener('click', () => {
+            setActiveTab(tabKedai, contentKedai);
+            logDebug('Switched to Kedai tab');
+            fetchKedaiList();
+        });
+        
+        tabMenu.addEventListener('click', () => {
+            setActiveTab(tabMenu, contentMenu);
+            logDebug('Switched to Menu Makanan tab');
+            fetchMenuList();
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('show');
+            });
+        }
+        
+        // Status toggle
+        const statusToggle = document.getElementById('status_kedai');
+        const statusText = document.getElementById('status-text');
+        
+        statusToggle.addEventListener('change', () => {
+            if (statusToggle.checked) {
+                statusText.textContent = 'Kedai aktif dan dapat menerima pesanan';
+            } else {
+                statusText.textContent = 'Kedai tidak aktif';
+            }
+        });
+        
+        // Image preview for kedai
+        const kedaiFotoInput = document.getElementById('foto_kedai');
+        const kedaiImagePreview = document.getElementById('kedai-image-preview');
+        const kedaiUploadProgress = document.getElementById('kedai-upload-progress');
+        const kedaiUploadProgressBar = document.getElementById('kedai-upload-progress-bar');
+        
+        kedaiFotoInput.addEventListener('change', function() {
+            previewImage(this, kedaiImagePreview);
+        });
+        
+        // Image preview for menu
+        const makananFotoInput = document.getElementById('foto_makanan');
+        const makananImagePreview = document.getElementById('makanan-image-preview');
+        const makananUploadProgress = document.getElementById('makanan-upload-progress');
+        const makananUploadProgressBar = document.getElementById('makanan-upload-progress-bar');
+        
+        makananFotoInput.addEventListener('change', function() {
+            previewImage(this, makananImagePreview);
+        });
+        
+        // Function to preview image
+        function previewImage(input, previewElement) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                    input.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Clear preview
+                    previewElement.innerHTML = '';
+                    
+                    // Create image element
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    previewElement.appendChild(img);
+                }
+                
+                reader.readAsDataURL(file);
+                logDebug(`File selected: ${file.name} (${Math.round(file.size / 1024)} KB)`);
+            }
+        }
+        
+        // Function to upload image to Supabase Storage
+        async function uploadImage(file, progressElement, progressBarElement) {
+            if (!file) return null;
+            
+            try {
+                // Show progress bar
+                progressElement.style.display = 'block';
+                progressBarElement.style.width = '0%';
+                
+                // Generate unique filename
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+                const filePath = `${fileName}`;
+                
+                logDebug(`Uploading file: ${filePath}`);
+                
+                // Upload file to Supabase Storage
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from(STORAGE_BUCKET)
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+                
+                // Simulate progress (since Supabase doesn't provide upload progress)
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    progressBarElement.style.width = `${Math.min(progress, 90)}%`;
+                    if (progress >= 90) clearInterval(interval);
+                }, 100);
+                
+                if (error) {
+                    logDebug(`Upload error: ${error.message}`, 'error');
+                    clearInterval(interval);
+                    progressElement.style.display = 'none';
+                    alert(`Error uploading file: ${error.message}`);
+                    return null;
+                }
+                
+                // Complete progress bar
+                clearInterval(interval);
+                progressBarElement.style.width = '100%';
+                
+                // Get public URL
+                const { data: { publicUrl } } = supabaseClient
+                    .storage
+                    .from(STORAGE_BUCKET)
+                    .getPublicUrl(filePath);
+                
+                logDebug(`File uploaded successfully: ${publicUrl}`, 'success');
+                
+                // Hide progress bar after a delay
+                setTimeout(() => {
+                    progressElement.style.display = 'none';
+                }, 1000);
+                
+                return publicUrl;
+            } catch (err) {
+                logDebug(`Upload exception: ${err.message}`, 'error');
+                progressElement.style.display = 'none';
+                alert(`Error uploading file: ${err.message}`);
+                return null;
+            }
+        }
+        
+        // Function to show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Reset form kedai
+        function resetFormKedai() {
+            document.getElementById('kedai_id').value = '';
+            document.getElementById('form-kedai').reset();
+            document.getElementById('btn-simpan-kedai').textContent = 'Simpan Kedai';
+            kedaiImagePreview.innerHTML = '<div class="image-preview-placeholder">Preview gambar akan muncul di sini</div>';
+        }
+        
+        // Reset form menu
+        function resetFormMenu() {
+            document.getElementById('menu_id').value = '';
+            document.getElementById('form-menu').reset();
+            document.getElementById('btn-simpan-menu').textContent = 'Simpan Menu';
+            makananImagePreview.innerHTML = '<div class="image-preview-placeholder">Preview gambar akan muncul di sini</div>';
+        }
+        
+        // Form submission for kedai
+        const formKedai = document.getElementById('form-kedai');
+        const btnBatalKedai = document.getElementById('btn-batal-kedai');
+        
+        formKedai.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const kedaiId = document.getElementById('kedai_id').value;
+                const namaKedai = document.getElementById('nama_kedai').value;
+                const jamBuka = document.getElementById('jam_buka').value;
+                const deskripsiKedai = document.getElementById('deskripsi_kedai').value;
+                const alamatKedai = document.getElementById('alamat_kedai').value;
+                const ongkir = document.getElementById('ongkir').value;
+                const statusKedai = document.getElementById('status_kedai').checked;
+                const fotoKedaiFile = document.getElementById('foto_kedai').files[0];
+                
+                // Prepare data
+                const kedaiData = {
+                    nama_kedai: namaKedai,
+                    jam_buka: jamBuka,
+                    deskripsi_singkat: deskripsiKedai,
+                    alamat_kedai: alamatKedai,
+                    ongkir_tetap: parseInt(ongkir),
+                    aktif: statusKedai
+                };
+                
+                // Upload image if selected
+                if (fotoKedaiFile) {
+                    const fotoUrl = await uploadImage(fotoKedaiFile, kedaiUploadProgress, kedaiUploadProgressBar);
+                    if (fotoUrl) {
+                        kedaiData.foto_url = fotoUrl;
+                    }
+                }
+                
+                let result;
+                
+                if (kedaiId) {
+                    // Update existing kedai
+                    logDebug(`Updating kedai: ${namaKedai} (ID: ${kedaiId})`);
+                    
+                    // Add updated_at timestamp
+                    kedaiData.updated_at = new Date().toISOString();
+                    
+                    result = await supabaseClient
+                        .from('kedai')
+                        .update(kedaiData)
+                        .eq('id', kedaiId);
+                        
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Kedai updated successfully: ${namaKedai}`, 'success');
+                    showNotification('Data kedai berhasil diperbarui!');
+                } else {
+                    // Create new kedai
+                    logDebug(`Saving new kedai: ${namaKedai}`);
+                    
+                    // Add timestamps
+                    kedaiData.created_at = new Date().toISOString();
+                    kedaiData.updated_at = new Date().toISOString();
+                    
+                    result = await supabaseClient
+                        .from('kedai')
+                        .insert([kedaiData])
+                        .select();
+                        
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Kedai saved successfully: ${JSON.stringify(result.data)}`, 'success');
+                    showNotification('Data kedai berhasil disimpan!');
+                }
+                
+                // Reset form
+                resetFormKedai();
+                
+                // Refresh lists
+                fetchKedaiList();
+                populateKedaiDropdown();
+                
+            } catch (err) {
+                logDebug(`Exception saving kedai: ${err.message}`, 'error');
+                alert(`Error: ${err.message}`);
+            }
+        });
+        
+        // Cancel button for kedai form
+        btnBatalKedai.addEventListener('click', () => {
+            resetFormKedai();
+        });
+        
+        // Form submission for menu
+        const formMenu = document.getElementById('form-menu');
+        const btnBatalMenu = document.getElementById('btn-batal-menu');
+        
+        formMenu.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const menuId = document.getElementById('menu_id').value;
+                const kedaiId = document.getElementById('pilih_kedai').value;
+                const namaMakanan = document.getElementById('nama_makanan').value;
+                const deskripsiMakanan = document.getElementById('deskripsi_makanan').value;
+                const harga = document.getElementById('harga').value;
+                const kategori_menu = document.getElementById('kategori_menu').value;
+                const fotoMakananFile = document.getElementById('foto_makanan').files[0];
+                
+                if (!kedaiId) {
+                    alert('Silakan pilih kedai terlebih dahulu.');
+                    return;
+                }
+                
+                // Prepare data
+                const menuData = {
+                    kedai_id: kedaiId,
+                    nama_makanan: namaMakanan,
+                    deskripsi_makanan: deskripsiMakanan,
+                    harga: parseInt(harga),
+                    kategori_menu: kategori_menu
+                };
+                
+                // Upload image if selected
+                if (fotoMakananFile) {
+                    const fotoUrl = await uploadImage(fotoMakananFile, makananUploadProgress, makananUploadProgressBar);
+                    if (fotoUrl) {
+                        menuData.foto_makanan_url = fotoUrl;
+                    }
+                }
+                
+                let result;
+                
+                if (menuId) {
+                    // Update existing menu
+                    logDebug(`Updating menu: ${namaMakanan} (ID: ${menuId})`);
+                    
+                    // Add updated_at timestamp
+                    menuData.updated_at = new Date().toISOString();
+                    
+                    result = await supabaseClient
+                        .from('menu_makanan')
+                        .update(menuData)
+                        .eq('id', menuId);
+                        
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Menu updated successfully: ${namaMakanan}`, 'success');
+                    showNotification('Data menu berhasil diperbarui!');
+                } else {
+                    // Create new menu
+                    logDebug(`Saving menu: ${namaMakanan}`);
+                    
+                    // Add timestamps
+                    menuData.created_at = new Date().toISOString();
+                    menuData.updated_at = new Date().toISOString();
+                    
+                    result = await supabaseClient
+                        .from('menu_makanan')
+                        .insert([menuData])
+                        .select();
+                        
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Menu saved successfully: ${JSON.stringify(result.data)}`, 'success');
+                    showNotification('Data menu berhasil disimpan!');
+                }
+                
+                // Reset form if not "Save & Add New"
+                if (e.submitter.id !== 'btn-simpan-tambah') {
+                    resetFormMenu();
+                } else {
+                    // Just clear the form but keep the kedai selection
+                    const selectedKedaiId = document.getElementById('pilih_kedai').value;
+                    document.getElementById('menu_id').value = '';
+                    document.getElementById('form-menu').reset();
+                    document.getElementById('pilih_kedai').value = selectedKedaiId;
+                    document.getElementById('btn-simpan-menu').textContent = 'Simpan Menu';
+                    makananImagePreview.innerHTML = '<div class="image-preview-placeholder">Preview gambar akan muncul di sini</div>';
+                }
+                
+                // Refresh menu list
+                fetchMenuList();
+                
+            } catch (err) {
+                logDebug(`Exception saving menu: ${err.message}`, 'error');
+                alert(`Error: ${err.message}`);
+            }
+        });
+        
+        // Cancel button for menu form
+        btnBatalMenu.addEventListener('click', () => {
+            resetFormMenu();
+        });
+        
+        // Function to fetch kedai list
+        async function fetchKedaiList() {
+            try {
+                const kedaiList = document.getElementById('kedai-list');
+                
+                logDebug('Fetching kedai list...');
+                
+                const { data, error } = await supabaseClient
+                    .from('kedai')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    logDebug(`Error fetching kedai list: ${error.message}`, 'error');
+                    return;
+                }
+                
+                logDebug(`Fetched ${data.length} kedai records`);
+                
+                // Clear list
+                kedaiList.innerHTML = '';
+                
+                if (data.length === 0) {
+                    kedaiList.innerHTML = '<div class="empty-state">Belum ada data kedai. Silakan tambahkan kedai baru.</div>';
+                    return;
+                }
+                
+                // Populate list
+                data.forEach(kedai => {
+                    const kedaiCard = document.createElement('div');
+                    kedaiCard.className = 'item-card';
+                    
+                    const kedaiInfo = document.createElement('div');
+                    kedaiInfo.className = 'item-info';
+                    
+                    const kedaiTitle = document.createElement('h3');
+                    kedaiTitle.textContent = kedai.nama_kedai;
+                    
+                    const kedaiAddress = document.createElement('p');
+                    kedaiAddress.textContent = kedai.alamat_kedai || '';
+                    
+                    const kedaiStatus = document.createElement('p');
+                    kedaiStatus.textContent = `Status: ${kedai.aktif ? 'Aktif' : 'Tidak Aktif'}`;
+                    
+                    kedaiInfo.appendChild(kedaiTitle);
+                    kedaiInfo.appendChild(kedaiAddress);
+                    kedaiInfo.appendChild(kedaiStatus);
+                    
+                    const kedaiActions = document.createElement('div');
+                    kedaiActions.className = 'item-actions';
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'btn btn-edit';
+                    editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                    editBtn.addEventListener('click', () => {
+                        editKedai(kedai);
+                    });
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'btn btn-delete';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Hapus';
+                    deleteBtn.addEventListener('click', () => {
+                        showDeleteConfirmation('kedai', kedai.id, kedai.nama_kedai);
+                    });
+                    
+                    kedaiActions.appendChild(editBtn);
+                    kedaiActions.appendChild(deleteBtn);
+                    
+                    kedaiCard.appendChild(kedaiInfo);
+                    kedaiCard.appendChild(kedaiActions);
+                    
+                    kedaiList.appendChild(kedaiCard);
+                });
+                
+            } catch (err) {
+                logDebug(`Exception fetching kedai list: ${err.message}`, 'error');
+            }
+        }
+        
+        // Function to fetch menu list
+        async function fetchMenuList() {
+            try {
+                const menuList = document.getElementById('menu-list');
+                
+                logDebug('Fetching menu list...');
+                
+                const { data, error } = await supabaseClient
+                    .from('menu_makanan')
+                    .select(`
+                        *,
+                        kedai:kedai_id(nama_kedai)
+                    `)
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    logDebug(`Error fetching menu list: ${error.message}`, 'error');
+                    return;
+                }
+                
+                logDebug(`Fetched ${data.length} menu records`);
+                
+                // Clear list
+                menuList.innerHTML = '';
+                
+                if (data.length === 0) {
+                    menuList.innerHTML = '<div class="empty-state">Belum ada data menu. Silakan tambahkan menu baru.</div>';
+                    return;
+                }
+                
+                // Populate list
+                data.forEach(menu => {
+                    const menuCard = document.createElement('div');
+                    menuCard.className = 'item-card';
+                    
+                    const menuInfo = document.createElement('div');
+                    menuInfo.className = 'item-info';
+                    
+                    const menuTitle = document.createElement('h3');
+                    menuTitle.textContent = menu.nama_makanan;
+                    
+                    const menuKedai = document.createElement('p');
+                    menuKedai.textContent = `Kedai: ${menu.kedai ? menu.kedai.nama_kedai : 'Unknown'}`;
+                    
+                    const menuPrice = document.createElement('p');
+                    menuPrice.textContent = `Harga: Rp ${menu.harga.toLocaleString('id-ID')}`;
+                    
+                    menuInfo.appendChild(menuTitle);
+                    menuInfo.appendChild(menuKedai);
+                    menuInfo.appendChild(menuPrice);
+                    
+                    const menuActions = document.createElement('div');
+                    menuActions.className = 'item-actions';
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'btn btn-edit';
+                    editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                    editBtn.addEventListener('click', () => {
+                        editMenu(menu);
+                    });
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'btn btn-delete';
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Hapus';
+                    deleteBtn.addEventListener('click', () => {
+                        showDeleteConfirmation('menu', menu.id, menu.nama_makanan);
+                    });
+                    
+                    menuActions.appendChild(editBtn);
+                    menuActions.appendChild(deleteBtn);
+                    
+                    menuCard.appendChild(menuInfo);
+                    menuCard.appendChild(menuActions);
+                    
+                    menuList.appendChild(menuCard);
+                });
+                
+            } catch (err) {
+                logDebug(`Exception fetching menu list: ${err.message}`, 'error');
+            }
+        }
+        
+        // Function to populate kedai dropdown
+        async function populateKedaiDropdown() {
+            try {
+                const kedaiDropdown = document.getElementById('pilih_kedai');
+                
+                logDebug('Populating kedai dropdown...');
+                
+                const { data, error } = await supabaseClient
+                    .from('kedai')
+                    .select('id, nama_kedai')
+                    .order('nama_kedai', { ascending: true });
+                
+                if (error) {
+                    logDebug(`Error fetching kedai for dropdown: ${error.message}`, 'error');
+                    return;
+                }
+                
+                logDebug(`Fetched ${data.length} kedai for dropdown`);
+                
+                // Clear dropdown except first option
+                while (kedaiDropdown.options.length > 1) {
+                    kedaiDropdown.remove(1);
+                }
+                
+                // Populate dropdown
+                data.forEach(kedai => {
+                    const option = document.createElement('option');
+                    option.value = kedai.id;
+                    option.textContent = kedai.nama_kedai;
+                    kedaiDropdown.appendChild(option);
+                });
+                
+            } catch (err) {
+                logDebug(`Exception populating kedai dropdown: ${err.message}`, 'error');
+            }
+        }
+        
+        // Function to edit kedai
+        async function editKedai(kedai) {
+            try {
+                logDebug(`Editing kedai: ${kedai.nama_kedai} (ID: ${kedai.id})`);
+                
+                // Set form values
+                document.getElementById('kedai_id').value = kedai.id;
+                document.getElementById('nama_kedai').value = kedai.nama_kedai;
+                document.getElementById('jam_buka').value = kedai.jam_buka || '';
+                document.getElementById('deskripsi_kedai').value = kedai.deskripsi_singkat || '';
+                document.getElementById('alamat_kedai').value = kedai.alamat_kedai || '';
+                document.getElementById('ongkir').value = kedai.ongkir_tetap || '';
+                document.getElementById('status_kedai').checked = kedai.aktif;
+                
+                // Update status text
+                if (kedai.aktif) {
+                    document.getElementById('status-text').textContent = 'Kedai aktif dan dapat menerima pesanan';
+                } else {
+                    document.getElementById('status-text').textContent = 'Kedai tidak aktif';
+                }
+                
+                // Show image preview if available
+                if (kedai.foto_url) {
+                    kedaiImagePreview.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = kedai.foto_url;
+                    kedaiImagePreview.appendChild(img);
+                }
+                
+                // Change button text
+                document.getElementById('btn-simpan-kedai').textContent = 'Perbarui Kedai';
+                
+                // Scroll to form
+                document.querySelector('.card').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (err) {
+                logDebug(`Exception editing kedai: ${err.message}`, 'error');
+                alert(`Error: ${err.message}`);
+            }
+        }
+        
+        // Function to edit menu
+        async function editMenu(menu) {
+            try {
+                logDebug(`Editing menu: ${menu.nama_makanan} (ID: ${menu.id})`);
+                
+                // Set form values
+                document.getElementById('menu_id').value = menu.id;
+                document.getElementById('pilih_kedai').value = menu.kedai_id;
+                document.getElementById('nama_makanan').value = menu.nama_makanan;
+                document.getElementById('deskripsi_makanan').value = menu.deskripsi_makanan || '';
+                document.getElementById('harga').value = menu.harga || '';
+                document.getElementById('kategori_menu').value = menu.kategori_menu || '';
+                
+                // Show image preview if available
+                if (menu.foto_makanan_url) {
+                    makananImagePreview.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = menu.foto_makanan_url;
+                    makananImagePreview.appendChild(img);
+                }
+                
+                // Change button text
+                document.getElementById('btn-simpan-menu').textContent = 'Perbarui Menu';
+                
+                // Switch to menu tab if not active
+                if (!contentMenu.classList.contains('active')) {
+                    setActiveTab(tabMenu, contentMenu);
+                }
+                
+                // Scroll to form
+                document.querySelector('#content-menu .card').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (err) {
+                logDebug(`Exception editing menu: ${err.message}`, 'error');
+                alert(`Error: ${err.message}`);
+            }
+        }
+        
+        // Delete confirmation modal
+        const deleteModal = document.getElementById('delete-modal');
+        const closeModal = document.querySelector('.close');
+        const btnCancelDelete = document.getElementById('btn-cancel-delete');
+        const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+        
+        // Function to show delete confirmation
+        function showDeleteConfirmation(type, id, name) {
+            document.getElementById('delete-type').value = type;
+            document.getElementById('delete-id').value = id;
+            document.getElementById('delete-message').textContent = `Apakah Anda yakin ingin menghapus ${type === 'kedai' ? 'kedai' : 'menu'} "${name}"?`;
+            deleteModal.style.display = 'block';
+        }
+        
+        // Close modal when clicking X
+        closeModal.addEventListener('click', () => {
+            deleteModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking Cancel
+        btnCancelDelete.addEventListener('click', () => {
+            deleteModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+        });
+        
+        // Confirm delete
+        btnConfirmDelete.addEventListener('click', async () => {
+            const type = document.getElementById('delete-type').value;
+            const id = document.getElementById('delete-id').value;
+            
+            try {
+                logDebug(`Deleting ${type} with ID: ${id}`);
+                
+                let result;
+                
+                if (type === 'kedai') {
+                    // Check if kedai has menu items
+                    const { data: menuItems, error: menuError } = await supabaseClient
+                        .from('menu_makanan')
+                        .select('id')
+                        .eq('kedai_id', id);
+                    
+                    if (menuError) {
+                        throw new Error(menuError.message);
+                    }
+                    
+                    if (menuItems && menuItems.length > 0) {
+                        if (!confirm(`Kedai ini memiliki ${menuItems.length} menu terkait. Menghapus kedai akan menghapus semua menu terkait. Lanjutkan?`)) {
+                            deleteModal.style.display = 'none';
+                            return;
+                        }
+                        
+                        // Delete related menu items first
+                        const { error: deleteMenuError } = await supabaseClient
+                            .from('menu_makanan')
+                            .delete()
+                            .eq('kedai_id', id);
+                        
+                        if (deleteMenuError) {
+                            throw new Error(deleteMenuError.message);
+                        }
+                        
+                        logDebug(`Deleted ${menuItems.length} related menu items`, 'success');
+                    }
+                    
+                    // Delete kedai
+                    result = await supabaseClient
+                        .from('kedai')
+                        .delete()
+                        .eq('id', id);
+                    
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Kedai deleted successfully`, 'success');
+                    showNotification('Kedai berhasil dihapus!');
+                    
+                    // Refresh lists
+                    fetchKedaiList();
+                    populateKedaiDropdown();
+                    fetchMenuList(); // Refresh menu list in case related items were deleted
+                } else {
+                    // Delete menu
+                    result = await supabaseClient
+                        .from('menu_makanan')
+                        .delete()
+                        .eq('id', id);
+                    
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+                    
+                    logDebug(`Menu deleted successfully`, 'success');
+                    showNotification('Menu berhasil dihapus!');
+                    
+                    // Refresh menu list
+                    fetchMenuList();
+                }
+                
+                // Close modal
+                deleteModal.style.display = 'none';
+                
+            } catch (err) {
+                logDebug(`Exception deleting ${type}: ${err.message}`, 'error');
+                alert(`Error: ${err.message}`);
+                deleteModal.style.display = 'none';
+            }
+        });
+        
+        // Initial data loading
+        fetchKedaiList();
+        populateKedaiDropdown();
+    </script>
+</body>
+</html>
